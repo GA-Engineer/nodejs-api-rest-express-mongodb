@@ -4,7 +4,7 @@ export default class LivroController {
 
     static listarLivros = async (req, res) => {
         try {
-            const livrosResultado = await livros.find();
+            const livrosResultado = await livros.find().populate("autor", "nome").exec();
             res.status(200).json(livrosResultado)
         } catch (err) {
             res.status(500).json(err);
@@ -14,7 +14,17 @@ export default class LivroController {
     static listarLivroPorId = async (req, res) => {
         try {
             const id = req.params.id;
-            const livrosResultado = await livros.findById(id);
+            const livrosResultado = await livros.findById(id).populate("autor", "nome").exec();
+            res.status(200).json(livrosResultado)
+        } catch (err) {
+            res.status(400).json(err);
+        }
+    }
+
+    static listarLivrosPorEditora = async (req, res) => {
+        try {
+            const editora = req.query.editora;
+            const livrosResultado = await livros.find({'editora': editora}).populate("autor", "nome").exec();
             res.status(200).json(livrosResultado)
         } catch (err) {
             res.status(400).json(err);
