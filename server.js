@@ -1,16 +1,7 @@
-const http = require('http');
-const port = 3000;
-const rotas = {
-    '/': 'Curso de Node',
-    '/livros': 'Entrei na página de livros',
-    '/autores': 'Listagem de autores'
-}
+import app from "./src/app.js";
 
-const server = http.createServer((req, res) => {
-    res.writeHead(200, {"CContent-Type": "text/plain" });
-    res.end(rotas[req.url])
-});
+const port = process.env.PORT || 3000;
 
-server.listen(port, () => {
+app.listen(port, () => {
     console.log(`Servidor rodando na porta http://localhost:${port}`)
 });
